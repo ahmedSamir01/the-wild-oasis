@@ -1,20 +1,31 @@
-import Counter from "../components/Counter";
+import CabinCard from "../_components/CabinCard";
+import CabinList from "../_components/CabinList";
+import Counter from "../_components/Counter";
+import { getCabins } from "../_lib/data-service";
+
+export const metadata = {
+  title: "Cabins",
+};
 
 export default async function Page() {
-  const res = await fetch("	https://jsonplaceholder.org/users");
-  const data = await res.json();
+  const cabins = await getCabins();
+  console.log(cabins);
 
   return (
     <div>
-      <h1>Cabins page</h1>
+      <h1 className="text-4xl mb-5 text-accent-400 font-medium">
+        Our Luxury Cabins
+      </h1>
+      <p className="text-primary-200 text-lg mb-10">
+        Cozy yet luxurious cabins, located right in the heart of the Italian
+        Dolomites. Imagine waking up to beautiful mountain views, spending your
+        days exploring the dark forests around, or just relaxing in your private
+        hot tub under the stars. Enjoy nature&apos;s beauty in your own little
+        home away from home. The perfect spot for a peaceful, calm vacation.
+        Welcome to paradise.
+      </p>
 
-      <ul>
-        {data.map((user) => (
-          <li key={user.id}>{user.firstname}</li>
-        ))}
-      </ul>
-
-      <Counter data={data} />
+      <CabinList />
     </div>
   );
 }
