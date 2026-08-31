@@ -8,19 +8,12 @@ function CabinCard({ cabin }) {
   return (
     <div className="flex border-primary-800 border">
       <div className="flex-1 relative">
-        {image ? (
-          <Image
-            src={image}
-            fill
-            alt={`Cabin ${name}`}
-            className="object-cover border-r border-primary-800"
-          />
-        ) : (
-          <div
-            className="absolute inset-0 bg-primary-900 border-r border-primary-800"
-            aria-hidden="true"
-          />
-        )}
+        <Image
+          src={image}
+          fill
+          alt={`Cabin ${name}`}
+          className="object-cover border-r border-primary-800"
+        />
       </div>
 
       <div className="flex-grow">
