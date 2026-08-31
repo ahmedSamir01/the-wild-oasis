@@ -1,16 +1,12 @@
-import CabinCard from "../_components/CabinCard";
+import { Suspense } from "react";
 import CabinList from "../_components/CabinList";
-import Counter from "../_components/Counter";
-import { getCabins } from "../_lib/data-service";
+import Spinner from "../_components/Spinner";
 
 export const metadata = {
   title: "Cabins",
 };
 
-export default async function Page() {
-  const cabins = await getCabins();
-  console.log(cabins);
-
+export default function Page() {
   return (
     <div>
       <h1 className="text-4xl mb-5 text-accent-400 font-medium">
@@ -25,7 +21,9 @@ export default async function Page() {
         Welcome to paradise.
       </p>
 
-      <CabinList />
+      <Suspense fallback={<Spinner />}>
+        <CabinList />
+      </Suspense>
     </div>
   );
 }
