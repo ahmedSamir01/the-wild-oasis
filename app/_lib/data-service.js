@@ -1,3 +1,5 @@
+import { eachDayOfInterval } from "date-fns";
+import { notFound } from "next/navigation";
 import { supabase } from "./supabase";
 
 function getImageUrl(image) {
@@ -23,6 +25,7 @@ export async function getCabin(id) {
 
   if (error) {
     console.error(error);
+    notFound();
   }
 
   if (!data) return null;
@@ -45,4 +48,66 @@ export async function getCabins() {
     ...cabin,
     image: getImageUrl(cabin.image),
   }));
+}
+
+export async function getBookedDatesByCabinId(cabinId) {
+  let today = new Date();
+  today.setUTCHours(0, 0, 0, 0);
+  today = today.toISOString();
+
+  const { data, error } = await supabase
+    .from("bookings")
+    .select("*")
+    .eq("cabinId", cabinId)
+    .or(`startDate.gte.${today},status.eq.checked-in`);
+
+  if (error) {
+    console.error(error);
+    throw new Error("Bookings could not get loaded");
+  }
+
+  const bookedDates = data
+    .map((booking) =>
+      eachDayOfInterval({
+        start: new Date(booking.startDate),
+        end: new Date(booking.endDate),
+      }),
+    )
+    .flat();
+
+  return bookedDates;
+}
+
+export async function getSettings() {
+  const { data, error } = await supabase.from("settings").select("*").single();
+
+  if (error) {
+    console.error(error);
+    throw new Error("Settings could not be loaded");
+  }
+
+  return data;
+}
+
+export async function getCountries() {
+  try {
+    const res = await fetch(
+      "https://cdn.jsdelivr.net/npm/world-countries@5.0.0/countries.json",
+      { next: { revalidate: 86400 } },
+    );
+
+    if (!res.ok) throw new Error("Countries request failed");
+
+    const data = await res.json();
+
+    if (!Array.isArray(data)) throw new Error("Invalid countries response");
+
+    return data.map((country) => ({
+      name: country.name.common,
+      flag: `https://flagcdn.com/w320/${country.cca2.toLowerCase()}.png`,
+    }));
+  } catch (error) {
+    console.error(error);
+    throw new Error("Could not fetch countries");
+  }
 }
