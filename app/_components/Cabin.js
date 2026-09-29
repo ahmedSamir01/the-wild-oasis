@@ -23,7 +23,13 @@ function Cabin({ cabin }) {
         </h3>
 
         <p className="text-lg text-primary-300 mb-10">
-          <TextExpander>{description}</TextExpander>
+          <TextExpander>
+            Where nature&apos;s beauty and comfortable living blend seamlessly.
+            Hidden away in the heart of the Italian Dolomites, this is your
+            paradise away from home. But it&apos;s not just about the luxury
+            cabins. It&apos;s about the experience of reconnecting with nature
+            and enjoying simple pleasures with family.
+          </TextExpander>
         </p>
 
         <ul className="flex flex-col gap-4 mb-7">
