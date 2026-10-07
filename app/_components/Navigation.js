@@ -28,21 +28,22 @@ export default async function Navigation() {
         </li>
         <li>
           {session?.user?.image ? (
-            <Image
-              src={session?.user?.image}
-              className="rounded-full"
-              alt="User Image"
-              width={32}
-              height={32}
-            />
-          ) : (
-            <Link
-              href="/account"
-              className="hover:text-accent-400 transition-colors"
-            >
-              Guest area
-            </Link>
-          )}
+            <div className="flex items-center gap-2">
+              <Image
+                src={session?.user?.image}
+                className="rounded-full"
+                alt="User Image"
+                width={32}
+                height={32}
+              />{" "}
+              <Link
+                href="/account"
+                className="hover:text-accent-400 transition-colors"
+              >
+                Guest area
+              </Link>
+            </div>
+          ) : null}
         </li>
       </ul>
     </nav>

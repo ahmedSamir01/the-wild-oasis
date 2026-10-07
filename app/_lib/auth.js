@@ -8,6 +8,11 @@ const authOptions = {
       clientSecret: process.env.AUTH_GOOGLE_SECRET,
     }),
   ],
+  callbacks: {
+    authorized: async ({ auth }) => {
+      return !!auth;
+    },
+  },
 };
 
 export const {
