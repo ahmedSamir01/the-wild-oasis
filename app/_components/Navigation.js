@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { auth } from "@/app/_lib/auth";
 import Image from "next/image";
+import SignInButton from "./SignInButton";
 
 export default async function Navigation() {
   const session = await auth();
@@ -43,7 +44,9 @@ export default async function Navigation() {
                 Guest area
               </Link>
             </div>
-          ) : null}
+          ) : (
+            <Link href="/login">guest area</Link>
+          )}
         </li>
       </ul>
     </nav>
