@@ -25,6 +25,13 @@ const authOptions = {
         return false;
       }
     },
+    async session({ session, token }) {
+      const guest = await getGuest(token.email);
+      if (guest) {
+        session.user.id = guest.id;
+      }
+      return session;
+    },
   },
   pages: {
     signIn: "/login",
