@@ -1,11 +1,14 @@
 "use client";
 
+import { useState } from "react";
 import { updateGuest } from "../_lib/actions";
 import SubmitButton from "./SubmitButton";
 import Image from "next/image";
 
 function UpdateProfileForm({ guest, children }) {
   const { fullName, email, nationality, nationalID, countryFlag } = guest;
+
+  const [count, setCount] = useState(0);
 
   return (
     <form
@@ -43,7 +46,7 @@ function UpdateProfileForm({ guest, children }) {
             className="h-5 rounded-sm"
           /> */}
         </div>
-
+        {/* render server component inside a client component*/}
         {children}
       </div>
 
